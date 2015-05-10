@@ -9,6 +9,4 @@ exports.run = (event, utils, cb) ->
   , (err, resp, body) ->
     if not err and body
       p = JSON.parse body
-      cb
-        
-        data: decodeURIComponent(p.value.joke)
+      cb data: decodeURIComponent(p.value.joke)
