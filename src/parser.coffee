@@ -112,7 +112,9 @@ module.exports = (event, callback) ->
   # format and call the callback
   respond = (out) ->
     out.id = event.id
-    console.log out
+    out.what = event.what
+    out.type = "response"
+
     if "error" in out.what
       callback out
     else
