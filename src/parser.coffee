@@ -4,58 +4,108 @@ all = requireDir "./response", recurse: true
 # utilities for each module
 utils =
 
-  # format a date
-  formatDate: (date) ->
-    [dd, m, d, y] = [date.getDay(), date.getMonth(), date.getDate(), date.getFullYear()]
+  # config files
+  config: requireDir "../config"
 
-    # retreive day
-    dd = [
-      "sunday"
-      "monday"
-      "tuesday"
-      "wednesday"
-      "thursday"
-      "friday"
-      "saturday"
-    ][dd]
+  date:
 
-    # retreive month
-    m = [
-      "january"
-      "febuary"
-      "march"
-      "april"
-      "may"
-      "june"
-      "july"
-      "august"
-      "september"
-      "october"
-      "november"
-      "december"
-    ][m]
+    # format a date
+    formatDate: (date) ->
+      [dd, m, d, y] = [date.getDay(), date.getMonth(), date.getDate(), date.getFullYear()]
 
-    "#{dd}, #{m} #{d}, #{y}"
+      # retreive day
+      dd = [
+        "sunday"
+        "monday"
+        "tuesday"
+        "wednesday"
+        "thursday"
+        "friday"
+        "saturday"
+      ][dd]
 
-  formatTime: (time) ->
-    [h, m] = [time.getHours(), time.getMinutes()]
+      # retreive month
+      m = [
+        "january"
+        "febuary"
+        "march"
+        "april"
+        "may"
+        "june"
+        "july"
+        "august"
+        "september"
+        "october"
+        "november"
+        "december"
+      ][m]
 
-    # am or pm
-    if h < 12
-      ap = "AM"
-    else
-      ap = "PM"
+      "#{dd}, #{m} #{d}, #{y}"
 
-    # format hours
-    h -= 12 while h > 12
+    formatTime: (time) ->
+      [h, m] = [time.getHours(), time.getMinutes()]
 
-    # format minutes, too
-    m = "0#{m}" if m < 10
+      # am or pm
+      if h < 12
+        ap = "AM"
+      else
+        ap = "PM"
 
-    "#{h}:#{m} #{ap}"
+      # format hours
+      h -= 12 while h > 12
 
-  formatDateTime: (dt) ->
-    "#{@formatDate dt} at #{@formatTime dt}"
+      # format minutes, too
+      m = "0#{m}" if m < 10
+
+      "#{h}:#{m} #{ap}"
+
+    formatDateTime: (dt) ->
+      "#{@formatDate dt} at #{@formatTime dt}"
+
+    # =========== #
+    # COMPARISONS #
+    # =========== #
+
+    # is a specified date today?
+    isDateToday: (date) ->
+      today = new Date
+      date.getDate() is today.getDate() and
+      date.getMonth() is today.getMonth() and
+      date.getYear() is today.getYear()
+
+    # check to see if a date is in the week
+    isDateThisWeek: (date) ->
+      today = new Date
+      date.getMonth() is today.getMonth() and
+      date.getYear() is today.getYear() and
+      date.getDate() < today.getDate()+7 and
+      date.getDate() > today.getDate()-7
+
+    # is a date within a specified number of days on either side
+    isDateWithinDays: (date, days) ->
+      oneDay = 1000 * 60 * 60 * 24
+
+      now = new Date
+      start = new Date now.getFullYear(), 0, 0
+      diff = now - start
+      nowdate = diff / oneDay
+
+      start = new Date date.getFullYear(), 0, 0
+      diff = now - start
+      basedate = diff / oneDay
+
+      basedate > nowdate-days and basedate < nowdate+days
+
+
+    isDateInFuture: (date) ->
+      today = new Date
+      date.getTime() > today.getTime()
+
+    isDateInPast: (date) ->
+      today = new Date
+      date.getTime() < today.getTime()
+
+
 
 module.exports = (event, callback) ->
 
