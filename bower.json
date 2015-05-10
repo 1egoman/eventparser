@@ -1,0 +1,26 @@
+{
+  "name": "eventparser",
+  "version": "0.0.0",
+  "main": "src/eventparser.coffee",
+  "description": "event parsing madness",
+  "homepage": "https://github.com/1egoman/eventparser",
+  "bugs": "https://github.com/1egoman/eventparser/issues",
+  "author": {
+    "name": "Ryan Gaus",
+    "email": "rsg1egoman@gmail.com",
+    "url": "http://rgaus.net"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1egoman/eventparser"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "jquery": "~2.1.3"
+  }
+}
