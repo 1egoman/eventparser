@@ -4,5 +4,5 @@ request = require "request"
 # send a quad to my current position
 exports.run = (event, utils, cb) ->
   cb
-    what: "core.query.response"
+    
     data: "sending quad..."
