@@ -23,15 +23,17 @@
     "start": "nodemon src/index.coffee"
   },
   "dependencies": {
-    
     "body-parser": "^1.12.3",
+    "chalk": "^1.0.0",
+    "ejs": "^2.3.1",
     "express": "^4.12.3",
     "express-session": "^1.11.1",
     "express-static": "^1.0.3",
-    "ejs": "^2.3.1",
-    
-    "chalk": "^1.0.0",
-    "node-sass-middleware": "^0.5.0"
+    "node-sass-middleware": "^0.5.0",
+    "request": "^2.55.0",
+    "require-dir": "^0.3.0",
+    "underscore": "^1.8.3",
+    "uuid": "^2.0.1"
   },
   "devDependencies": {
     "matchdep": "~0.1.1",
