@@ -6,5 +6,4 @@ exports.run = (event, utils) ->
     d = new Date
 
   # return the event
-  what: "core.query.response"
-  data: utils.formatDate d
+  data: utils.date.formatDate d
