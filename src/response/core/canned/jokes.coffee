@@ -10,5 +10,5 @@ exports.run = (event, utils, cb) ->
     if not err and body
       p = JSON.parse body
       cb
-        what: "core.query.response"
+        
         data: decodeURIComponent(p.value.joke)
