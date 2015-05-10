@@ -1,6 +1,6 @@
 # core.system.quad.status
-# how are the wuads doing, currently?
-exports.run = (event, cb) ->
+# how are the quads doing, currently?
+exports.run = (event, utils, cb) ->
   cb
     what: "core.query.response"
     data: "quads are currently non-functional"

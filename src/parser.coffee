@@ -1,6 +1,62 @@
 requireDir = require "require-dir"
 all = requireDir "./response", recurse: true
 
+# utilities for each module
+utils =
+
+  # format a date
+  formatDate: (date) ->
+    [dd, m, d, y] = [date.getDay(), date.getMonth(), date.getDate(), date.getFullYear()]
+
+    # retreive day
+    dd = [
+      "sunday"
+      "monday"
+      "tuesday"
+      "wednesday"
+      "thursday"
+      "friday"
+      "saturday"
+    ][dd]
+
+    # retreive month
+    m = [
+      "january"
+      "febuary"
+      "march"
+      "april"
+      "may"
+      "june"
+      "july"
+      "august"
+      "september"
+      "october"
+      "november"
+      "december"
+    ][m]
+
+    "#{dd}, #{m} #{d}, #{y}"
+
+  formatTime: (time) ->
+    [h, m] = [time.getHours(), time.getMinutes()]
+
+    # am or pm
+    if h < 12
+      ap = "AM"
+    else
+      ap = "PM"
+
+    # format hours
+    h -= 12 while h > 12
+
+    # format minutes, too
+    m = "0#{m}" if m < 10
+
+    "#{h}:#{m} #{ap}"
+
+  formatDateTime: (dt) ->
+    "#{@formatDate dt} at #{@formatTime dt}"
+
 module.exports = (event, callback) ->
 
   # format and call the callback
@@ -29,5 +85,5 @@ module.exports = (event, callback) ->
   # a module can run synchronously and return from itself,
   # or can work asynchronously and use the provided callback.
   if head
-    r = head.run event, respond
+    r = head.run event, utils, respond
     respond r if r.what
