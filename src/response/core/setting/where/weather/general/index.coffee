@@ -26,7 +26,7 @@ exports.get_forecast = (date, utils, cb) ->
 
         # make sure date is valid
         if date.toString() is "Invalid Date"
-          cb error: "date is invalid."
+          cb name: "error.date.invalid"
           return
 
         # are we looking for weather recently?
@@ -61,10 +61,13 @@ exports.get_forecast = (date, utils, cb) ->
         # date is in the past
         else
           cb
-            error: "date is in the past."
+            name: "error.date.invalid"
+            desc: "date is in the past."
 
 
 exports.run = (event, utils, cb) ->
   exports.get_forecast event.when, utils, (err, forecast) ->
-
-    cb data: forecast
+    if err
+      cb data: err
+    else
+      cb data: forecast

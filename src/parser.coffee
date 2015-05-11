@@ -126,7 +126,7 @@ module.exports = (event, callback) ->
         head = head[cursor]
       else
         respond
-          what: "core.query.error"
+          name: "error.event.nonexistant"
           data: "No such response exists: #{event.what} (failed on #{cursor})"
         break
 
@@ -140,4 +140,5 @@ module.exports = (event, callback) ->
       respond r if r.what
 
   else
-    respond error: "Malformed event."
+    respond
+      name: "error.event.malformed"

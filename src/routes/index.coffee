@@ -13,12 +13,13 @@ module.exports = ->
     event = req.body
 
     # make sure type is valid
-    if event.type is "nlp_decoded"
+    if event.type is "core.event.nlp_decoded"
       parser event, (err, out) ->
         res.send out
     else
       res.send
-        error: "Invalid type for event: `#{event.type}`"
+        name: "error.event.type.invalid"
+        desc: "Invalid type for event: `#{event.type}`"
 
 
 
