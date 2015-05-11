@@ -58,16 +58,25 @@ exports.get_forecast = (date, utils, cb) ->
               match = body.hourly_forecast[sp.indexOf _.min(sp)]
               cb null, match
 
+            else
+              cb
+                name: "error.request.failed"
+                desc: err
+
         # date is in the past
         else
           cb
             name: "error.date.invalid"
             desc: "date is in the past."
 
+    else
+      cb
+        name: "error.request.failed"
+        desc: err
 
 exports.run = (event, utils, cb) ->
   exports.get_forecast event.when, utils, (err, forecast) ->
     if err
-      cb data: err
+      cb err
     else
       cb data: forecast
