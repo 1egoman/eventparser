@@ -12,8 +12,13 @@ module.exports = ->
   app.post "/event/accept/:namespace?", (req, res) ->
     event = req.body
 
-    parser event, (err, out) ->
-      res.send out
+    # make sure type is valid
+    if event.type is "nlp_decoded"
+      parser event, (err, out) ->
+        res.send out
+    else
+      res.send
+        error: "Invalid type for event: `#{event.type}`"
 
 
 

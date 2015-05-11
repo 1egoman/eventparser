@@ -114,28 +114,30 @@ module.exports = (event, callback) ->
     out.id = event.id
     out.what = event.what
     out.type = "response"
+    callback null, out
 
-    if "error" in out.what
-      callback out
-    else
-      callback null, out
+  # check for malformed event
+  if event and event.what
 
-  # go to the correct package name
-  head = all
-  for cursor in event.what.split '.'
-    if head[cursor]
-      head = head[cursor]
-    else
-      respond
-        what: "core.query.error"
-        data: "No such response exists: #{event.what} (failed on #{cursor})"
-      break
+    # go to the correct package name
+    head = all
+    for cursor in event.what.split '.'
+      if head[cursor]
+        head = head[cursor]
+      else
+        respond
+          what: "core.query.error"
+          data: "No such response exists: #{event.what} (failed on #{cursor})"
+        break
 
-  head = head.index if not head.run
+    head = head.index if not head.run
 
-  # run the module, passing in the event and a callback
-  # a module can run synchronously and return from itself,
-  # or can work asynchronously and use the provided callback.
-  if head
-    r = head.run event, utils, respond
-    respond r if r.what
+    # run the module, passing in the event and a callback
+    # a module can run synchronously and return from itself,
+    # or can work asynchronously and use the provided callback.
+    if head
+      r = head.run event, utils, respond
+      respond r if r.what
+
+  else
+    respond error: "Malformed event."
