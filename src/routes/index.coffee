@@ -13,7 +13,7 @@ module.exports = ->
     event = req.body
 
     # make sure type is valid
-    if event.type is "core.event.nlp_decoded"
+    if event.name is "core.event.nlp_decoded"
       parser event, (err, out) ->
         res.send out
     else

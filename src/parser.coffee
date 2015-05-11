@@ -111,9 +111,8 @@ module.exports = (event, callback) ->
 
   # format and call the callback
   respond = (out) ->
+    out.name = event.what
     out.id = event.id
-    out.what = event.what
-    out.type = "response"
     callback null, out
 
   # check for malformed event
