@@ -11,6 +11,7 @@ utils =
 
     # format a date
     formatDate: (date) ->
+      date = new Date(date) if typeof date is "string"
       [dd, m, d, y] = [date.getDay(), date.getMonth(), date.getDate(), date.getFullYear()]
 
       # retreive day
@@ -43,6 +44,7 @@ utils =
       "#{dd}, #{m} #{d}, #{y}"
 
     formatTime: (time) ->
+      time = new Date(time) if typeof time is "string"
       [h, m] = [time.getHours(), time.getMinutes()]
 
       # am or pm
@@ -111,6 +113,7 @@ module.exports = (event, callback) ->
 
   # format and call the callback
   respond = (out) ->
+    console.log event
     out.name = event.what
     out.id = event.id
     callback null, out
