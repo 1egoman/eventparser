@@ -12,6 +12,10 @@ utils =
     # format a date
     formatDate: (date) ->
       date = new Date(date) if typeof date is "string"
+
+      # is date valid?
+      if date.toString() is "Invalid Date" then return "(Not a date)"
+
       [dd, m, d, y] = [date.getDay(), date.getMonth(), date.getDate(), date.getFullYear()]
 
       # retreive day
@@ -45,6 +49,10 @@ utils =
 
     formatTime: (time) ->
       time = new Date(time) if typeof time is "string"
+
+      # is time valid?
+      if time.toString() is "Invalid Date" then return "(Not a time)"
+
       [h, m] = [time.getHours(), time.getMinutes()]
 
       # am or pm
