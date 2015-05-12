@@ -11,6 +11,7 @@ module.exports = ->
   # accept a new event, and start the parsing process
   app.post "/event/accept/:namespace?", (req, res) ->
     event = req.body
+    event.namespace = req.params.namespace
 
     # make sure type is valid
     if event.name is "core.event.nlp_decoded"
