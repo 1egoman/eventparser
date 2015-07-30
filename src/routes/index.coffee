@@ -1,6 +1,10 @@
 express = require "express"
 app = express.Router()
 parser = require "../parser"
+events = require "../events"
+
+pjson = require "../../package.json"
+
 
 module.exports = ->
 
@@ -14,13 +18,24 @@ module.exports = ->
     event.namespace = req.params.namespace
 
     # make sure type is valid
-    if event.name is "core.event.nlp_decoded"
-      parser event, (err, out) ->
-        res.send out
-    else
-      res.send
-        name: "error.event.type.invalid"
-        desc: "Invalid type for event: `#{event.type}`"
+    events.can_resolve_event event.name, (resolvable) ->
+      if resolvable
+        events.get_event event.name, (err, evt) ->
+          if err
+            name: "error.couldnt.require.module"
+          else
+            evt.run event, do ->
+
+              version: pjson.version
+
+              async: ->
+                (event) ->
+                  res.send event
+
+      else
+        res.send
+          name: "error.event.type.invalid"
+          desc: "Invalid type for event: `#{event.type}`"
 
 
 

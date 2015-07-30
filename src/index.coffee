@@ -27,7 +27,7 @@ exports.main = ->
   app.use '/', router()
 
   # listen for requests
-  PORT = process.argv.port or 8000
+  PORT = process.argv.port or 7000
   app.listen PORT, ->
     console.log chalk.blue "-> :#{PORT}"
 
