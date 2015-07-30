@@ -2,6 +2,9 @@ express = require "express"
 app = express.Router()
 parser = require "../parser"
 events = require "../events"
+async = require "async"
+fs = require "fs"
+path = require "path"
 
 pjson = require "../../package.json"
 
@@ -32,10 +35,23 @@ module.exports = ->
                 (event) ->
                   res.send event
 
+
+              get_config: (prop_name, cb) ->
+                fs.readFile path.join("config", "config.json"), (err, data) ->
+                  if err
+                    cb err
+                  else
+                    cb null, JSON.parse(data)[prop_name]
+
+              get_config_many: (props_names, cb) ->
+                async.map props_names, @get_config, cb
+
+
+
       else
         res.send
           name: "error.event.type.invalid"
-          desc: "Invalid type for event: `#{event.type}`"
+          data: "Invalid type for event: `#{event.type}`"
 
 
 
